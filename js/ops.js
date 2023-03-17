@@ -10083,6 +10083,36 @@ CABLES.OPS["6538a190-e73c-451b-964e-d010ee267aa9"]={f:Ops.Sidebar.TextInput_v2,o
 
 
 
+
+// **************************************************************
+// 
+// Ops.String.String_v2
+// 
+// **************************************************************
+
+Ops.String.String_v2 = function()
+{
+CABLES.Op.apply(this,arguments);
+const op=this;
+const attachments={};
+const
+    v=op.inString("value",""),
+    result=op.outString("String");
+
+v.onChange=function()
+{
+    result.set(v.get());
+};
+
+
+
+};
+
+Ops.String.String_v2.prototype = new CABLES.Op();
+CABLES.OPS["d697ff82-74fd-4f31-8f54-295bc64e713d"]={f:Ops.String.String_v2,objName:"Ops.String.String_v2"};
+
+
+
 window.addEventListener('load', function(event) {
 CABLES.jsLoaded=new Event('CABLES.jsLoaded');
 document.dispatchEvent(CABLES.jsLoaded);
