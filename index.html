@@ -5,7 +5,7 @@
     <title>Acid</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-    <meta itemprop="name" content="Shadowbox_triqsy">
+    <meta itemprop="name" content="">
     <meta itemprop="description" content="">
     <meta itemprop="image" content="screenshot.png">
     <meta name="description" content="" />
@@ -43,17 +43,24 @@
     <canvas id="glcanvas" width="100vw" height="100vh" tabindex="1"></canvas>
 
     
-    <script type="text/javascript" src="js/libs.core.min.js"></script>
-<script type="text/javascript" src="js/cables.min.js"></script>
-<script type="text/javascript" src="js/ops.js"></script>
-
-    <script type="text/javascript"  src="js/cgl_copytexture.js"></script>
-<script type="text/javascript"  src="js/cgl_shadermodifier.js"></script>
-
+    <script type="text/javascript" src="js/patch.js" async></script>
+    
 
     <script>
 
-        // disable rubberband effect on mobile devices
+let isKeyPressed = false;
+
+        // Add event listener for keydown event
+        document.addEventListener('keydown', function(event) {
+        // Check if "Enter" key is pressed
+        if (event.key === 'Enter') {
+            isKeyPressed = !isKeyPressed;
+            //variable injection
+            CABLES.patch.setVariable("play",isKeyPressed);
+        }
+        });
+
+
         document.getElementById('glcanvas').addEventListener('touchmove', (e)=>{ e.preventDefault(); }, false);
 
 
@@ -67,13 +74,14 @@
 
         document.addEventListener('CABLES.jsLoaded', function (event) {
             CABLES.patch = new CABLES.Patch({
-                patchFile: 'js/Shadowbox_triqsy.json',
+                patch: CABLES.exportedPatch,
                 "prefixAssetPath": "",
                 "assetPath": "assets/",
                 "jsPath": "js/",
                 "glCanvasId": "glcanvas",
                 "glCanvasResizeToWindow": true,
                 "onPatchLoaded": patchInitialized,
+                "allowLocalFileAccess":true,
                 "onFinishedLoading": patchFinishedLoading,
                 "canvas":{"alpha":true,"premultipliedAlpha":true} // make canvas transparent
             });
